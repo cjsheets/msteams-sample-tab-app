@@ -1,5 +1,17 @@
-import styles from '../styles/pages-index.module.css';
-
 export default function Index() {
-  return <div className={styles.container}>Welcome to the sample tab app</div>;
+  return (
+    <div className="container">
+      Welcome to the sample tab app
+      <style jsx>{`
+        .container {
+          min-height: 100vh;
+          padding: 0 0.5rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      `}</style>
+    </div>
+  );
 }

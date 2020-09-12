@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.7",
+  "version": "1.0.0",
+  "id": "00000000-0000-0000-0000-000000000000",
+  "packageName": "com.cjsheets.sampletabapp",
+  "developer": {
+    "name": "Chad Sheets",
+    "websiteUrl": "https://sheets.ch",
+    "privacyUrl": "https://sheets.ch/privacy",
+    "termsOfUseUrl": "https://sheets.ch/tos"
+  },
+  "name": {
+    "short": "Sample App",
+    "full": "Sample App for Microsoft Teams"
+  },
+  "description": {
+    "short": "Sample App for Microsoft Teams",
+    "full": "This sample app provides a simple interface to interact with the Microsoft Teams SDK."
+  },
+  "icons": {
+    "outline": "icon32x32.png",
+    "color": "icon192x192.png"
+  },
+  "accentColor": "#00592b",
+  "staticTabs": [
+    {
+      "entityId": "com.cjsheets.sampletabapp.personaltab",
+      "name": "Personal Tab",
+      "contentUrl": "https://sampletabapp.ngrok.io/personal-tab",
+      "scopes": ["team", "personal"]
+    }
+  ],
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://sampletabapp.ngrok.io/configure",
+      "canUpdateConfiguration": true,
+      "scopes": ["team"]
+    }
+  ],
+  "bots": [
+    {
+      "botId": "00000000-0000-0000-0000-000000000000",
+      "needsChannelSelector": false,
+      "isNotificationOnly": false,
+      "scopes": ["team", "personal"]
+    }
+  ],
+  "composeExtensions": [
+    {
+      "botId": "00000000-0000-0000-0000-000000000000",
+      "commands": [
+        {
+          "id": "getRandomText",
+          "description": "Gets some random text and images that you can insert in messages for fun.",
+          "title": "Get some random text for fun",
+          "initialRun": true,
+          "parameters": [
+            {
+              "name": "cardTitle",
+              "description": "Card title to use",
+              "title": "Card title"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "permissions": [],
+  "validDomains": []
+}

@@ -1,4 +1,3 @@
-import '../styles/globals.css';
 import { createTheme, Customizer, Fabric, initializeIcons } from 'office-ui-fabric-react';
 import Head from 'next/head';
 
@@ -41,6 +40,13 @@ function App({ Component, pageProps }) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Component {...pageProps} />
+        <style jsx global>{`
+          html,
+          body {
+            padding: 0;
+            margin: 0;
+          }
+        `}</style>
       </Fabric>
     </Customizer>
   );
