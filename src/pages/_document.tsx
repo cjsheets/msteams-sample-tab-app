@@ -1,5 +1,12 @@
 import * as React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+  DocumentProps,
+} from 'next/document';
 import { Stylesheet, InjectionMode } from '@uifabric/merge-styles';
 import { resetIds } from '@uifabric/utilities';
 
@@ -9,8 +16,8 @@ stylesheet.setConfig({
   namespace: 'server',
 });
 
-export default class MyDocument extends Document {
-  static getInitialProps({ renderPage }) {
+export default class MyDocument extends Document<DocumentProps & { styleTags: string }> {
+  static async getInitialProps({ renderPage }: DocumentContext) {
     stylesheet.reset();
     resetIds();
 

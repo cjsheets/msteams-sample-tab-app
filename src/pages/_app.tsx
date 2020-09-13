@@ -1,5 +1,8 @@
 import { createTheme, Customizer, Fabric, initializeIcons } from 'office-ui-fabric-react';
 import Head from 'next/head';
+import type { AppProps } from 'next/app';
+import React from 'react';
+import { NavSidebar } from '../components/nav-sidebar';
 
 initializeIcons();
 const theme = createTheme({
@@ -31,7 +34,7 @@ const theme = createTheme({
 
 // (expected) Warning: Prop `className` did not match.
 // https://github.com/microsoft/fluentui/wiki/Server-side-rendering-and-browserless-testing
-function App({ Component, pageProps }) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <Customizer settings={{ theme }}>
       <Fabric applyTheme>
@@ -39,12 +42,19 @@ function App({ Component, pageProps }) {
           <title>Sample Tab App</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Component {...pageProps} />
+        <div className="container">
+          <NavSidebar />
+          <Component {...pageProps} />
+        </div>
         <style jsx global>{`
           html,
           body {
             padding: 0;
             margin: 0;
+          }
+          .container {
+            min-height: 100vh;
+            display: flex;
           }
         `}</style>
       </Fabric>
