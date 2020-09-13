@@ -22,7 +22,7 @@
     "outline": "icon32x32.png",
     "color": "icon192x192.png"
   },
-  "accentColor": "#00592b",
+  "accentColor": "#F4F4F4",
   "staticTabs": [
     {
       "entityId": "com.cjsheets.sampletabapp.personaltab",
@@ -66,6 +66,7 @@
       ]
     }
   ],
-  "permissions": [],
-  "validDomains": []
+  "permissions": ["identity", "messageTeamMembers"],
+  "validDomains": ["*.ngrok.io"],
+  "devicePermissions": ["media", "notifications", "geolocation"]
 }

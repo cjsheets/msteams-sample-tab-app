@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, ICardTokens } from '@uifabric/react-cards';
 import { Text } from 'office-ui-fabric-react';
-import styles from '../styles/index.module.css';
+import styles from './content-card.module.css';
 
 interface Props {
   title?: string;

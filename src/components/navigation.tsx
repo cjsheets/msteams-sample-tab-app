@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { withRouter } from 'next/dist/client/router';
 
-export function NavSidebar() {
+export default withRouter(function Navigation({ router }) {
   const [scrolling, setScrolling] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
 
@@ -14,6 +15,11 @@ export function NavSidebar() {
 
     return () => window.removeEventListener('scroll', onScroll);
   }, [scrollTop]);
+
+  const pagesWithoutNavigation = ['/configure'];
+  if (pagesWithoutNavigation.indexOf(router.pathname) >= 0) {
+    return null;
+  }
 
   return (
     <div className="container">
@@ -34,7 +40,7 @@ export function NavSidebar() {
       `}</style>
     </div>
   );
-}
+});
 
 export async function getStaticProps() {
   return { props: {} };

@@ -2,7 +2,7 @@ import { createTheme, Customizer, Fabric, initializeIcons } from 'office-ui-fabr
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import React from 'react';
-import { NavSidebar } from '../components/nav-sidebar';
+import Navigation from '../components/navigation';
 
 initializeIcons();
 const theme = createTheme({
@@ -43,7 +43,7 @@ function App({ Component, pageProps }: AppProps) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="container">
-          <NavSidebar />
+          <Navigation />
           <Component {...pageProps} />
         </div>
         <style jsx global>{`
