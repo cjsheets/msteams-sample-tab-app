@@ -16,7 +16,7 @@ export default withRouter(function Navigation({ router }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, [scrollTop]);
 
-  const pagesWithoutNavigation = ['/configure'];
+  const pagesWithoutNavigation = ['/configure', '/task-module'];
   if (pagesWithoutNavigation.indexOf(router.pathname) >= 0) {
     return null;
   }

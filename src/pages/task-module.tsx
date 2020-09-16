@@ -1,12 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, Stack } from 'office-ui-fabric-react';
-import { Card } from '@uifabric/react-cards';
 import { TeamsJs } from 'msteams-auth-service';
-import { ContentCard } from '../components/content-card';
+import { SubmitTask } from '../components/tasks/submit-task';
 
 export default function Index() {
+  const [title, setTitle] = useState<string>();
+  const [width, setWidth] = useState<string>();
+  const [height, setHeight] = useState<string>();
+
   useEffect(() => {
     TeamsJs.initialize();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.get('title') && setTitle(urlParams.get('title'));
+    urlParams.get('width') && setWidth(urlParams.get('width'));
+    urlParams.get('height') && setHeight(urlParams.get('height'));
   }, []);
 
   return (
@@ -14,19 +22,27 @@ export default function Index() {
       <Text as="h1" variant="xxLarge">
         Task Module
       </Text>
-      <ContentCard>
-        <Card.Item> </Card.Item>
-        <Text>
-          This configuration page is required by Teams. (
-          <a
-            href="https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/create-tab-pages/configuration-page"
-            target="_blank"
-          >
-            docs
-          </a>
-          )
+      {title && (
+        <Text nowrap>
+          <b>Title:</b> {title}
         </Text>
-      </ContentCard>
+      )}
+      {width && (
+        <Text nowrap>
+          <b>Width:</b> {width}
+        </Text>
+      )}
+      {height && (
+        <Text nowrap>
+          <b>Height:</b> {height}
+        </Text>
+      )}
+      <SubmitTask />
+      <style jsx global>{`
+        .ms-Fabric {
+          background: #ffffff !important;
+        }
+      `}</style>
     </Stack>
   );
 }
