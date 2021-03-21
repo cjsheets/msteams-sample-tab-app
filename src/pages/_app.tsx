@@ -2,6 +2,7 @@ import { createTheme, Customizer, Fabric, initializeIcons } from 'office-ui-fabr
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import React from 'react';
+import { isInsideIframe, TeamsAuthenticator, microsoftTeams } from 'teams-authenticator';
 import Navigation from '../components/navigation';
 
 initializeIcons();
@@ -32,32 +33,52 @@ const theme = createTheme({
   },
 });
 
+export const AuthContext = React.createContext<TeamsAuthenticator>(null);
+
 // (expected) Warning: Prop `className` did not match.
 // https://github.com/microsoft/fluentui/wiki/Server-side-rendering-and-browserless-testing
 function App({ Component, pageProps }: AppProps) {
+  let authenticator = null;
+  if (typeof window !== 'undefined') {
+    if (isInsideIframe()) {
+      microsoftTeams.initialize();
+    }
+
+    authenticator = new TeamsAuthenticator({
+      auth: {
+        clientId: process.env.NEXT_PUBLIC_CLIENT_ID,
+      },
+    });
+
+    const url = new URL(window.location.href);
+    url.hash ? authenticator.handleLoginRedirect() : authenticator.login();
+  }
+
   return (
     <Customizer settings={{ theme }}>
-      <Fabric applyTheme>
-        <Head>
-          <title>Sample Tab App</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <div className="container">
-          <Navigation />
-          <Component {...pageProps} />
-        </div>
-        <style jsx global>{`
-          html,
-          body {
-            padding: 0;
-            margin: 0;
-          }
-          .container {
-            min-height: 100vh;
-            display: flex;
-          }
-        `}</style>
-      </Fabric>
+      <AuthContext.Provider value={authenticator}>
+        <Fabric applyTheme>
+          <Head>
+            <title>Sample Tab App</title>
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <div className="container">
+            <Navigation />
+            <Component {...pageProps} />
+          </div>
+          <style jsx global>{`
+            html,
+            body {
+              padding: 0;
+              margin: 0;
+            }
+            .container {
+              min-height: 100vh;
+              display: flex;
+            }
+          `}</style>
+        </Fabric>
+      </AuthContext.Provider>
     </Customizer>
   );
 }

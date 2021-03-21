@@ -1,29 +1,44 @@
 import React, { useEffect } from 'react';
 import { Text, Stack } from 'office-ui-fabric-react';
 import { Card } from '@uifabric/react-cards';
-import { TeamsJs } from 'msteams-auth-service';
+import { microsoftTeams, isInsideIframe } from 'teams-authenticator';
 import { ContentCard } from '../components/content-card';
 import { GetAuthToken } from '../components/authentication/get-auth-token';
 import { StartTask } from '../components/tasks/start-task';
 
 export default function Index() {
+  const isEmbeddedInTeams = isInsideIframe();
+
   useEffect(() => {
-    TeamsJs.initialize();
+    if (isEmbeddedInTeams) {
+      microsoftTeams.initialize();
+    }
   }, []);
+
+  const TeamsSdkComponents = () => (
+    <>
+      <Text as="h1" variant="xLarge">
+        Tasks
+      </Text>
+      <ContentCard title="startTask()" description="Allows an app to open the task module.">
+        <StartTask />
+      </ContentCard>
+    </>
+  );
 
   return (
     <Stack tokens={{ childrenGap: 20, padding: 20 }} grow>
       <Text as="h1" variant="xxLarge">
-        Teams JS SDK
+        Sample Teams Tab App
       </Text>
       <ContentCard>
         <Card.Item> </Card.Item>
-        <Text>
-          The Microsoft Teams JavaScript client SDK is part of the Microsoft Teams developer
-          platform. It makes it easy to integrate your own services with Teams, whether you develop
-          custom apps for your enterprise or SaaS applications for teams around the world. See The
-          Microsoft Teams developer platform for full documentation on the platform and on the SDK.
-        </Text>
+        <Text>Test features of the Microsoft Teams SDK.</Text>
+        {!isEmbeddedInTeams && (
+          <Text>
+            <b>Note:</b> SDK features can only be tested when running inside the Teams client
+          </Text>
+        )}
       </ContentCard>
       <Text as="h1" variant="xLarge">
         Authentication
@@ -34,12 +49,7 @@ export default function Index() {
       >
         <GetAuthToken />
       </ContentCard>
-      <Text as="h1" variant="xLarge">
-        Tasks
-      </Text>
-      <ContentCard title="startTask()" description="Allows an app to open the task module.">
-        <StartTask />
-      </ContentCard>
+      {isEmbeddedInTeams && TeamsSdkComponents()}
     </Stack>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PrimaryButton, TextField } from '@fluentui/react';
-import { TeamsJs } from 'msteams-auth-service';
+import { microsoftTeams } from 'teams-authenticator';
 import { Card } from '@uifabric/react-cards';
 
 export function SubmitTask() {

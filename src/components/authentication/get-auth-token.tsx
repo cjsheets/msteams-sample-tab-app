@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Card } from '@uifabric/react-cards';
 import { PrimaryButton } from '@fluentui/react';
-import { TeamsJs } from 'msteams-auth-service';
 import { Text } from 'office-ui-fabric-react';
+import { AuthContext } from '../../pages/_app';
 
 export function GetAuthToken() {
   const [token, setToken] = useState<string>();
+  const authenticator = useContext(AuthContext);
 
   return (
     <Card.Section>
@@ -13,19 +14,13 @@ export function GetAuthToken() {
         <PrimaryButton
           text="Get Token"
           onClick={() => {
-            TeamsJs.authentication.getAuthToken({
-              resources: ['proxy.sheets.ch'],
-              successCallback: (token) => {
-                console.log('cb', token);
-                setToken(token);
-              },
-            });
+            authenticator.getToken([]).then((token) => setToken(token));
           }}
         />
         {token && (
           <>
             <br />
-            <Text nowrap>
+            <Text style={{ wordBreak: 'break-word' }}>
               <b>Token:</b> {token}
             </Text>
           </>

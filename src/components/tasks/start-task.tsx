@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from '@uifabric/react-cards';
 import { PrimaryButton, TextField } from '@fluentui/react';
-import { TeamsJs } from 'msteams-auth-service';
+import { microsoftTeams } from 'teams-authenticator';
 import { Text } from 'office-ui-fabric-react';
 
 export function StartTask() {
